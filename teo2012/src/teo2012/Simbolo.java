@@ -10,23 +10,30 @@ package teo2012;
  */
 public class Simbolo {
     
-    private char simbolo;
+    private String simbolo;
     private int cantidad;
+    private double probabilidad;
 
-    public Simbolo(char simbolo) {
+    public Simbolo(String simbolo) {
         this.simbolo = simbolo;
         this.cantidad = 1;
     }
 
     public int getCantidad() {
-        return cantidad;
+        return this.cantidad;
     }
 
-    public char getSimbolo() {
-        return simbolo;
+    public String getSimbolo() {
+        return this.simbolo;
     }
 
     public void add() {
         this.cantidad++;
     }
+    
+    public void setProbabilidad(int total){
+        this.probabilidad = cantidad / total;
+    }
+    
+    public double getProbabilidad(){return this.probabilidad;}
 }
