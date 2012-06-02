@@ -13,7 +13,9 @@ public class Huffman {
     /**
     * 
     */
-    
+    private void laConchaDeTuVieja(){
+        System.out.println("GITSucks");
+    }
             
     public void huffmanTree(){
         // Ordenar la lista de porbabilidades
