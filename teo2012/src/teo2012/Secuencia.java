@@ -30,6 +30,10 @@ public class Secuencia {
         for (int i = 0; i < this.simbolos.size(); i++){
             ((Simbolo) this.simbolos.get(i)).setProbabilidad(this.totalDeSimbolos);
         } 
+        
+        for (int i = 0; i < this.simbolos.size(); i++){
+            System.out.println(((Simbolo) this.simbolos.get(i)).getSimbolo()+ " - " +((Simbolo) this.simbolos.get(i)).getProbabilidad());
+        } 
     }
     
     private boolean simbolosContains(String simbolo){
