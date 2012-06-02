@@ -16,7 +16,7 @@ public class Secuencia {
     
     public Vector getSimbolos(){ return this.simbolos; }
     
-    public Secuencia(String path) throws FileNotFoundException{
+    public Secuencia(String path) throws FileNotFoundException{      
         File file = new File(path);
         Scanner input = new Scanner(file);
         simbolos = new Vector();
