@@ -17,6 +17,7 @@ public class Simbolo {
     public Simbolo(String simbolo) {
         this.simbolo = simbolo;
         this.cantidad = 1;
+        this.probabilidad = 1.00;
     }
 
     public int getCantidad() {
@@ -32,8 +33,8 @@ public class Simbolo {
     }
     
     public void setProbabilidad(int total){
-        this.probabilidad = cantidad / total;
+        this.probabilidad = ((double) this.cantidad/(double) total);
     }
     
-    public double getProbabilidad(){return this.probabilidad;}
+    public double getProbabilidad(){ return this.probabilidad; }
 }
