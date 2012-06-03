@@ -64,8 +64,12 @@ public class Secuencia {
         Scanner input = new Scanner(file);
         int buffer = 0;
         int cant_digitos = 0;
-        while (input.hasNext()) {
+        int cant_simbolos = 0;
+        //Bits para guardar en el alpha component;
+        int cant_bits = 8;
+        while (input.hasNext() && cant_simbolos < 10) {
             String nextToken = input.next();
+            cant_simbolos++;
             String codigo = h.getCode(nextToken);
             int n = codigo.length();
             int indice = 0;
@@ -76,7 +80,7 @@ public class Secuencia {
                 }
                 indice++;
                 cant_digitos++;
-                if (cant_digitos == 16){
+                if (cant_digitos == cant_bits){
                     System.out.println("Buffer = " + buffer);
                     buffer = 0;
                     cant_digitos = 0;
@@ -85,8 +89,8 @@ public class Secuencia {
             }
         }
         input.close();
-        if ((cant_digitos < 16) && (cant_digitos > 0)){
-            buffer = buffer << (16 - cant_digitos);
+        if ((cant_digitos < cant_bits) && (cant_digitos > 0)){
+            buffer = buffer << (cant_bits - cant_digitos);
             System.out.println("Buffer = " + buffer);
         }
     }

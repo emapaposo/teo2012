@@ -19,6 +19,7 @@ import javax.swing.JFileChooser;
 public class Teo2012 extends javax.swing.JFrame {
 
     private String secuenciaPath;
+    private Secuencia s;
     private Vector<Node> simbolos;
     
     /**
@@ -50,7 +51,7 @@ public class Teo2012 extends javax.swing.JFrame {
 
         jLabel1.setText("Teoria de la Informacion 2012 - Antognetti, Fernandez, Iglesias - Grupo 11 - Parte 1");
 
-        jButton1.setText("jButton1");
+        jButton1.setText("Codificar con Huffman");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -86,20 +87,16 @@ public class Teo2012 extends javax.swing.JFrame {
             .add(layout.createSequentialGroup()
                 .addContainerGap()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(layout.createSequentialGroup()
-                        .add(jLabel1)
-                        .addContainerGap(52, Short.MAX_VALUE))
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-                        .add(0, 0, Short.MAX_VALUE)
-                        .add(jButton1)
-                        .add(167, 167, 167))))
+                    .add(jLabel1)
+                    .add(jButton1))
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
-                .add(23, 23, 23)
+                .addContainerGap()
                 .add(jButton1)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 378, Short.MAX_VALUE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 395, Short.MAX_VALUE)
                 .add(jLabel1)
                 .addContainerGap())
         );
@@ -116,14 +113,14 @@ public class Teo2012 extends javax.swing.JFrame {
         simbolos=new Vector();
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
-            secuenciaPath = file.getAbsolutePath();
+            this.secuenciaPath = file.getAbsolutePath();
             try {
-                Secuencia s = new Secuencia(secuenciaPath);
+                this.s = new Secuencia(secuenciaPath);
                 //this.simbolos = s.getSimbolos();
                 for (int i = 0; i < s.getSimbolos().size(); i++){
                     Node n = new Node(null, null, ((Simbolo) s.getSimbolos().get(i)).getSimbolo(),
                             ((Simbolo) s.getSimbolos().get(i)).getProbabilidad());
-                    this.simbolos.add(n);
+                    this.simbolos.add(n);                    
                 }
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(Teo2012.class.getName()).log(Level.SEVERE, null, ex);
@@ -135,24 +132,30 @@ public class Teo2012 extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
-        Node n1=new Node(null, null, "A", 0.3025);
-        Node n2=new Node(null, null, "E", 0.2281);
-        Node n3=new Node(null, null, "C", 0.1601);
-        Node n4=new Node(null, null, "F", 0.1008);
-        Node n5=new Node(null, null, "D", 0.0971);
-        Node n6=new Node(null, null, "B", 0.0588);
-        Node n7=new Node(null, null, "G", 0.0526);
-        simbolos=new Vector();
-        simbolos.add(n1);
-        simbolos.add(n2);
-        simbolos.add(n3);
-        simbolos.add(n4);
-        simbolos.add(n5);
-        simbolos.add(n6);
-        simbolos.add(n7);
-        Huffman  h=new Huffman(simbolos);
+//        Node n1=new Node(null, null, "A", 0.3025);
+//        Node n2=new Node(null, null, "E", 0.2281);
+//        Node n3=new Node(null, null, "C", 0.1601);
+//        Node n4=new Node(null, null, "F", 0.1008);
+//        Node n5=new Node(null, null, "D", 0.0971);
+//        Node n6=new Node(null, null, "B", 0.0588);
+//        Node n7=new Node(null, null, "G", 0.0526);
+//        simbolos=new Vector();
+//        simbolos.add(n1);
+//        simbolos.add(n2);
+//        simbolos.add(n3);
+//        simbolos.add(n4);
+//        simbolos.add(n5);
+//        simbolos.add(n6);
+//        simbolos.add(n7);
+        
+        Huffman h = new Huffman(simbolos);
         Vector<Node> a= h.getHuffmantree();
-        System.out.println(a.elementAt(0).getValue());
+        
+        try {
+            this.s.codificar(secuenciaPath, h);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Teo2012.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 /**
      * @param args the command line arguments
