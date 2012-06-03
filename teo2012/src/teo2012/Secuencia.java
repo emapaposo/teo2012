@@ -13,6 +13,7 @@ public class Secuencia {
     
     private Vector simbolos;
     private int totalDeSimbolos;
+    private int cant_bits = 8;
     
     public Vector getSimbolos(){ return this.simbolos; }
     
@@ -66,7 +67,6 @@ public class Secuencia {
         int cant_digitos = 0;
         int cant_simbolos = 0;
         //Bits para guardar en el alpha component;
-        int cant_bits = 8;
         while (input.hasNext() && cant_simbolos < 10) {
             String nextToken = input.next();
             cant_simbolos++;
@@ -94,5 +94,5 @@ public class Secuencia {
             System.out.println("Buffer = " + buffer);
         }
     }
-    
+
 }

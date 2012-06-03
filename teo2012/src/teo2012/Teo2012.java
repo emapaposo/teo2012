@@ -4,12 +4,19 @@
  */
 package teo2012;
 
+import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 
 
     /**
@@ -19,6 +26,7 @@ import javax.swing.JFileChooser;
 public class Teo2012 extends javax.swing.JFrame {
 
     private String secuenciaPath;
+    private String picturePath;
     private Secuencia s;
     private Vector<Node> simbolos;
     
@@ -40,12 +48,25 @@ public class Teo2012 extends javax.swing.JFrame {
     private void initComponents() {
 
         fileChooser = new javax.swing.JFileChooser();
+        jMenuBar2 = new javax.swing.JMenuBar();
+        jMenu2 = new javax.swing.JMenu();
+        jMenu3 = new javax.swing.JMenu();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        sherlokToWatson = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+
+        jMenu2.setText("File");
+        jMenuBar2.add(jMenu2);
+
+        jMenu3.setText("Edit");
+        jMenuBar2.add(jMenu3);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -58,15 +79,38 @@ public class Teo2012 extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setText("Cargar Imagen");
+
+        org.jdesktop.layout.GroupLayout sherlokToWatsonLayout = new org.jdesktop.layout.GroupLayout(sherlokToWatson);
+        sherlokToWatson.setLayout(sherlokToWatsonLayout);
+        sherlokToWatsonLayout.setHorizontalGroup(
+            sherlokToWatsonLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(0, 0, Short.MAX_VALUE)
+        );
+        sherlokToWatsonLayout.setVerticalGroup(
+            sherlokToWatsonLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(0, 236, Short.MAX_VALUE)
+        );
+
+        jLabel2.setText("SherlokToWatson.bmp");
+
         jMenu1.setText("File");
 
-        jMenuItem1.setText("Open File");
+        jMenuItem1.setText("Open secuenciaSherlock.data");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
             }
         });
         jMenu1.add(jMenuItem1);
+
+        jMenuItem3.setText("Open SherlokToWatson.bmp");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem3);
 
         jMenuItem2.setText("Exit");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
@@ -88,15 +132,28 @@ public class Teo2012 extends javax.swing.JFrame {
                 .addContainerGap()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jLabel1)
-                    .add(jButton1))
+                    .add(layout.createSequentialGroup()
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(jButton1)
+                            .add(jButton2))
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(sherlokToWatson, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .add(jLabel2))))
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .addContainerGap()
-                .add(jButton1)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 395, Short.MAX_VALUE)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                    .add(jButton1)
+                    .add(jLabel2))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(jButton2)
+                    .add(sherlokToWatson, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 153, Short.MAX_VALUE)
                 .add(jLabel1)
                 .addContainerGap())
         );
@@ -115,6 +172,7 @@ public class Teo2012 extends javax.swing.JFrame {
             File file = fileChooser.getSelectedFile();
             this.secuenciaPath = file.getAbsolutePath();
             try {
+                //System.out.println(secuenciaPath);
                 this.s = new Secuencia(secuenciaPath);
                 //this.simbolos = s.getSimbolos();
                 for (int i = 0; i < s.getSimbolos().size(); i++){
@@ -149,7 +207,7 @@ public class Teo2012 extends javax.swing.JFrame {
 //        simbolos.add(n7);
         
         Huffman h = new Huffman(simbolos);
-        Vector<Node> a= h.getHuffmantree();
+        Vector<Node> a= h.code();
         
         try {
             this.s.codificar(secuenciaPath, h);
@@ -157,6 +215,25 @@ public class Teo2012 extends javax.swing.JFrame {
             Logger.getLogger(Teo2012.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        int returnVal = fileChooser.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            this.picturePath = file.getAbsolutePath();
+            //try {
+                //System.out.println(picturePath);
+            sherlokToWatson.setLayout(new java.awt.BorderLayout());
+            LoadImage li = new LoadImage(picturePath);
+            sherlokToWatson.add(li, BorderLayout.CENTER);
+            sherlokToWatson.validate();
+            //f.pack();
+            //f.setVisible(true);
+            //}
+        } else {
+            System.out.println("File access cancelled by user.");
+        }
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 /**
      * @param args the command line arguments
      */
@@ -191,7 +268,6 @@ public class Teo2012 extends javax.swing.JFrame {
         /*
          * Create and display the form
          */
-       
         
         java.awt.EventQueue.invokeLater(new Runnable() {
 
@@ -204,10 +280,20 @@ public class Teo2012 extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFileChooser fileChooser;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JPanel sherlokToWatson;
     // End of variables declaration//GEN-END:variables
+
+
+
 }
