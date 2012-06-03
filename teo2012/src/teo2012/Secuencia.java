@@ -59,4 +59,36 @@ public class Secuencia {
         }
     }
     
+    public void codificar(String path, Huffman h) throws FileNotFoundException{
+        File file = new File(path);
+        Scanner input = new Scanner(file);
+        int buffer = 0;
+        int cant_digitos = 0;
+        while (input.hasNext()) {
+            String nextToken = input.next();
+            String codigo = h.getCode(nextToken);
+            int n = codigo.length();
+            int indice = 0;
+            while (n > 0){
+                buffer = buffer << 1;
+                if (codigo.charAt(indice) == '1'){
+                    buffer = buffer | 1;
+                }
+                indice++;
+                cant_digitos++;
+                if (cant_digitos == 16){
+                    System.out.println("Buffer = " + buffer);
+                    buffer = 0;
+                    cant_digitos = 0;
+                }
+                n--;
+            }
+        }
+        input.close();
+        if ((cant_digitos < 16) && (cant_digitos > 0)){
+            buffer = buffer << (16 - cant_digitos);
+            System.out.println("Buffer = " + buffer);
+        }
+    }
+    
 }
