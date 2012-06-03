@@ -29,6 +29,8 @@ public class Teo2012 extends javax.swing.JFrame {
     private String picturePath;
     private Secuencia s;
     private Vector<Node> simbolos;
+    private Vector alphas;
+    private Huffman h;
     
     /**
      * Creates new form Teo2012
@@ -79,7 +81,12 @@ public class Teo2012 extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Cargar Imagen");
+        jButton2.setText("No Se");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         org.jdesktop.layout.GroupLayout sherlokToWatsonLayout = new org.jdesktop.layout.GroupLayout(sherlokToWatson);
         sherlokToWatson.setLayout(sherlokToWatsonLayout);
@@ -206,7 +213,7 @@ public class Teo2012 extends javax.swing.JFrame {
 //        simbolos.add(n6);
 //        simbolos.add(n7);
         
-        Huffman h = new Huffman(simbolos);
+        this.h = new Huffman(simbolos);
         Vector<Node> a= h.code();
         
         try {
@@ -225,6 +232,8 @@ public class Teo2012 extends javax.swing.JFrame {
                 //System.out.println(picturePath);
             sherlokToWatson.setLayout(new java.awt.BorderLayout());
             LoadImage li = new LoadImage(picturePath);
+            alphas = new Vector();
+            alphas = li.getAlphas();
             sherlokToWatson.add(li, BorderLayout.CENTER);
             sherlokToWatson.validate();
             //f.pack();
@@ -234,6 +243,15 @@ public class Teo2012 extends javax.swing.JFrame {
             System.out.println("File access cancelled by user.");
         }
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        Vector v = new Vector();
+        v.add(69);
+        v.add(30);
+        v.add(226);
+        v.add(64);
+        System.out.println(h.decode(v));
+    }//GEN-LAST:event_jButton2ActionPerformed
 /**
      * @param args the command line arguments
      */
