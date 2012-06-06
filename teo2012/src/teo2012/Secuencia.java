@@ -14,6 +14,8 @@ public class Secuencia {
     private Vector simbolos;
     private int totalDeSimbolos;
     private int cant_bits = 8;
+    private int[] alfas;
+    private int cantAlfas;
     
     public Vector getSimbolos(){ return this.simbolos; }
     
@@ -33,7 +35,7 @@ public class Secuencia {
         for (int i = 0; i < this.simbolos.size(); i++){
             ((Simbolo) this.simbolos.get(i)).setProbabilidad(this.totalDeSimbolos);
             //System.out.println(((Simbolo) this.simbolos.get(i)).getProbabilidad());
-        } 
+        }
     }
     
     private boolean simbolosContains(String simbolo){
@@ -60,16 +62,18 @@ public class Secuencia {
         }
     }
     
-    public void codificar(String path, Huffman h) throws FileNotFoundException{
+    public int getCantidadSimbolos(){ return this.totalDeSimbolos; }
+    
+    public int[] codificar(String path, Huffman h) throws FileNotFoundException{
         File file = new File(path);
         Scanner input = new Scanner(file);
         int buffer = 0;
         int cant_digitos = 0;
         int cant_simbolos = 0;
         //Bits para guardar en el alpha component;
-        while (input.hasNext() && cant_simbolos < 10) {
-            String nextToken = input.next();
-            cant_simbolos++;
+        Vector aux = new Vector();
+        while (input.hasNext()){// && cant_simbolos < 10) {
+            String nextToken = input.next(); 
             String codigo = h.getCode(nextToken);
             int n = codigo.length();
             int indice = 0;
@@ -81,18 +85,32 @@ public class Secuencia {
                 indice++;
                 cant_digitos++;
                 if (cant_digitos == cant_bits){
-                    System.out.println("Buffer = " + buffer);
+                    //System.out.println("Buffer = " + buffer + " " + cant_simbolos);
+                    //alfas[cant_simbolos] = buffer;
+                    aux.add(new Integer(buffer));
+                    cant_simbolos++;
                     buffer = 0;
                     cant_digitos = 0;
                 }
-                n--;
+                n--;  
             }
+            
         }
         input.close();
         if ((cant_digitos < cant_bits) && (cant_digitos > 0)){
             buffer = buffer << (cant_bits - cant_digitos);
-            System.out.println("Buffer = " + buffer);
+            //System.out.println("Buffer = " + buffer);
+            //alfas[cant_simbolos] = buffer;
+            aux.add(new Integer(buffer));
         }
+        this.cantAlfas = aux.size();
+        //System.out.println("cantalfas: "+ this.cantAlfas);
+        alfas = new int[this.cantAlfas];
+        for (int i = 0; i < this.cantAlfas; i++){
+            alfas[i] = ((Integer) aux.get(i)).intValue(); }
+        return alfas;
     }
+    
+    public int getCantidadAlfas(){ return this.cantAlfas; }
 
 }

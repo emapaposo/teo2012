@@ -29,7 +29,7 @@ public class Teo2012 extends javax.swing.JFrame {
     private String picturePath;
     private Secuencia s;
     private Vector<Node> simbolos;
-    private Vector alphas;
+    //private Vector alphas;
     private Huffman h;
     
     /**
@@ -54,15 +54,15 @@ public class Teo2012 extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         sherlokToWatson = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        info = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        codificar = new javax.swing.JMenuItem();
+        decodificar = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+
+        fileChooser.setDialogTitle("Open SECUENCIA");
 
         jMenu2.setText("File");
         jMenuBar2.add(jMenu2);
@@ -73,20 +73,6 @@ public class Teo2012 extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Teoria de la Informacion 2012 - Antognetti, Fernandez, Iglesias - Grupo 11 - Parte 1");
-
-        jButton1.setText("Codificar con Huffman");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        jButton2.setText("No Se");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
 
         org.jdesktop.layout.GroupLayout sherlokToWatsonLayout = new org.jdesktop.layout.GroupLayout(sherlokToWatson);
         sherlokToWatson.setLayout(sherlokToWatsonLayout);
@@ -99,26 +85,29 @@ public class Teo2012 extends javax.swing.JFrame {
             .add(0, 236, Short.MAX_VALUE)
         );
 
-        jLabel2.setText("SherlokToWatson.bmp");
+        info.setText("Info: ");
 
         jMenu1.setText("File");
 
-        jMenuItem1.setText("Open secuenciaSherlock.data");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        codificar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, 0));
+        codificar.setText("Codificar");
+        codificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                codificarActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        jMenu1.add(codificar);
 
-        jMenuItem3.setText("Open SherlokToWatson.bmp");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        decodificar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, 0));
+        decodificar.setText("Decodificar");
+        decodificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                decodificarActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem3);
+        jMenu1.add(decodificar);
 
+        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ESCAPE, 0));
         jMenuItem2.setText("Exit");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -137,30 +126,19 @@ public class Teo2012 extends javax.swing.JFrame {
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .addContainerGap()
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jLabel1)
-                    .add(layout.createSequentialGroup()
-                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jButton1)
-                            .add(jButton2))
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(sherlokToWatson, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .add(jLabel2))))
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                    .add(jLabel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .add(info)
+                    .add(sherlokToWatson, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
-                .addContainerGap()
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                    .add(jButton1)
-                    .add(jLabel2))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jButton2)
-                    .add(sherlokToWatson, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 153, Short.MAX_VALUE)
+                .add(info)
+                .add(41, 41, 41)
+                .add(sherlokToWatson, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .add(jLabel1)
                 .addContainerGap())
         );
@@ -172,58 +150,54 @@ public class Teo2012 extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        int returnVal = fileChooser.showOpenDialog(this);
-        simbolos=new Vector();
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File file = fileChooser.getSelectedFile();
-            this.secuenciaPath = file.getAbsolutePath();
-            try {
-                //System.out.println(secuenciaPath);
-                this.s = new Secuencia(secuenciaPath);
-                //this.simbolos = s.getSimbolos();
-                for (int i = 0; i < s.getSimbolos().size(); i++){
-                    Node n = new Node(null, null, ((Simbolo) s.getSimbolos().get(i)).getSimbolo(),
-                            ((Simbolo) s.getSimbolos().get(i)).getProbabilidad());
-                    this.simbolos.add(n);                    
-                }
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(Teo2012.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            System.out.println("File access cancelled by user.");
-        }
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
-//        Node n1=new Node(null, null, "A", 0.3025);
-//        Node n2=new Node(null, null, "E", 0.2281);
-//        Node n3=new Node(null, null, "C", 0.1601);
-//        Node n4=new Node(null, null, "F", 0.1008);
-//        Node n5=new Node(null, null, "D", 0.0971);
-//        Node n6=new Node(null, null, "B", 0.0588);
-//        Node n7=new Node(null, null, "G", 0.0526);
-//        simbolos=new Vector();
-//        simbolos.add(n1);
-//        simbolos.add(n2);
-//        simbolos.add(n3);
-//        simbolos.add(n4);
-//        simbolos.add(n5);
-//        simbolos.add(n6);
-//        simbolos.add(n7);
-        
-        this.h = new Huffman(simbolos);
-        Vector<Node> a= h.code();
+    private void codificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codificarActionPerformed
+        simbolos = new Vector();
+        this.secuenciaPath = getFile("Seleccionar Archivo secuenciaSherlock.data");
         
         try {
-            this.s.codificar(secuenciaPath, h);
+            //System.out.println(secuenciaPath);
+            this.s = new Secuencia(secuenciaPath);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Teo2012.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+        
+        //this.simbolos = s.getSimbolos();
+        for (int i = 0; i < s.getSimbolos().size(); i++){
+            Node n = new Node(null, null, ((Simbolo) s.getSimbolos().get(i)).getSimbolo(),
+                    ((Simbolo) s.getSimbolos().get(i)).getProbabilidad());
+            this.simbolos.add(n);
+        }
+        
+        this.h = new Huffman(simbolos);
+        Vector<Node> a = h.code();
+        int[] alphas = new int[s.getCantidadAlfas()];
+        try {
+            alphas = this.s.codificar(secuenciaPath, h);    
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Teo2012.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.picturePath = getFile("Seleccionar Archivo SherlockToWatson.bmp");
+        sherlokToWatson.setLayout(new java.awt.BorderLayout());
+        Image li = new Image(picturePath, alphas, s.getCantidadAlfas());        
+        
+        sherlokToWatson.add(li, BorderLayout.CENTER);
+        sherlokToWatson.validate();
+    }//GEN-LAST:event_codificarActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    private String getFile(String title){
+        fileChooser.setDialogTitle(title);
+        int returnVal = fileChooser.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            return file.getAbsolutePath();
+        } else {
+            info.setText("Info: File access cancelled by user.");
+            return "";
+        }
+    }
+    
+    private void decodificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decodificarActionPerformed
         int returnVal = fileChooser.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
@@ -231,10 +205,10 @@ public class Teo2012 extends javax.swing.JFrame {
             //try {
                 //System.out.println(picturePath);
             sherlokToWatson.setLayout(new java.awt.BorderLayout());
-            LoadImage li = new LoadImage(picturePath);
-            alphas = new Vector();
-            alphas = li.getAlphas();
-            sherlokToWatson.add(li, BorderLayout.CENTER);
+            //Image li = new Image(picturePath);
+            //alphas = new Vector();
+            //alphas = li.getAlphas();
+            //sherlokToWatson.add(li, BorderLayout.CENTER);
             sherlokToWatson.validate();
             //f.pack();
             //f.setVisible(true);
@@ -242,16 +216,7 @@ public class Teo2012 extends javax.swing.JFrame {
         } else {
             System.out.println("File access cancelled by user.");
         }
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Vector v = new Vector();
-        v.add(69);
-        v.add(30);
-        v.add(226);
-        v.add(64);
-        System.out.println(h.decode(v));
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_decodificarActionPerformed
 /**
      * @param args the command line arguments
      */
@@ -296,19 +261,17 @@ public class Teo2012 extends javax.swing.JFrame {
         
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem codificar;
+    private javax.swing.JMenuItem decodificar;
     private javax.swing.JFileChooser fileChooser;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel info;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel sherlokToWatson;
     // End of variables declaration//GEN-END:variables
 
