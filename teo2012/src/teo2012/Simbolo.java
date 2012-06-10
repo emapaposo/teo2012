@@ -32,6 +32,8 @@ public class Simbolo {
         this.cantidad++;
     }
     
+    public void setProbabilidadFinal(double p){ this.probabilidad = p; }
+    
     public void setProbabilidad(int total){
         this.probabilidad = ((double) this.cantidad/(double) total);
     }

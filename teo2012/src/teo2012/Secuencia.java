@@ -27,15 +27,32 @@ public class Secuencia {
         while (input.hasNext()) {
             String nextToken = input.next();
             //System.out.print(nextToken + " ");
-            //String nextLine = input.nextLine();
             addToSimbolos(nextToken);
             this.totalDeSimbolos++;
         }
+        //System.out.println(this.totalDeSimbolos);
         input.close();
         for (int i = 0; i < this.simbolos.size(); i++){
             ((Simbolo) this.simbolos.get(i)).setProbabilidad(this.totalDeSimbolos);
-            //System.out.println(((Simbolo) this.simbolos.get(i)).getProbabilidad());
+            //System.out.println(((Simbolo) this.simbolos.get(i)).getSimbolo()+":"+((Simbolo) this.simbolos.get(i)).getProbabilidad());
         }
+    }
+    
+    public Secuencia(){
+        simbolos = new Vector();
+    }
+    
+    public void fromGalaga(String path) throws FileNotFoundException{
+        File file = new File(path);
+        Scanner input = new Scanner(file);
+        this.totalDeSimbolos = 0;
+        while (input.hasNext()) {
+            String nextToken = input.next();
+            //System.out.print(nextToken + " ");
+            addSimboloFromGalaga(nextToken);
+        }
+        //System.out.println(this.totalDeSimbolos);
+        input.close();
     }
     
     private boolean simbolosContains(String simbolo){
@@ -113,4 +130,14 @@ public class Secuencia {
     
     public int getCantidadAlfas(){ return this.cantAlfas; }
 
+    private void addSimboloFromGalaga(String nextToken) {
+        String[] temp;
+        String delimiter = ":";
+        temp = nextToken.split(delimiter);
+        Simbolo s = new Simbolo(temp[0]);
+        double aDouble = Double.parseDouble(temp[1]);
+        s.setProbabilidadFinal(aDouble);
+        simbolos.add(s);
+    }
+        
 }

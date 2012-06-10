@@ -4,19 +4,16 @@
  */
 package teo2012;
 
-import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.image.BufferedImage;
+import java.awt.BorderLayout;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 
 
     /**
@@ -25,8 +22,9 @@ import javax.swing.JFrame;
  */
 public class Teo2012 extends javax.swing.JFrame {
 
-    private String secuenciaPath;
-    private String picturePath;
+    private File secuenciaPath;
+    private File picturePath;
+    private File galagaPath;
     private Secuencia s;
     private Vector<Node> simbolos;
     //private Vector alphas;
@@ -36,7 +34,7 @@ public class Teo2012 extends javax.swing.JFrame {
      * Creates new form Teo2012
      */
     public Teo2012() {
-        secuenciaPath = "";
+        secuenciaPath = null;
         initComponents();
     }
 
@@ -54,8 +52,9 @@ public class Teo2012 extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
         jLabel1 = new javax.swing.JLabel();
-        sherlokToWatson = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
         info = new javax.swing.JLabel();
+        sherlokToWatson = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         codificar = new javax.swing.JMenuItem();
@@ -74,18 +73,35 @@ public class Teo2012 extends javax.swing.JFrame {
 
         jLabel1.setText("Teoria de la Informacion 2012 - Antognetti, Fernandez, Iglesias - Grupo 11 - Parte 1");
 
+        info.setText("Info:");
+
+        org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .add(info, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 521, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .add(info)
+                .addContainerGap(65, Short.MAX_VALUE))
+        );
+
         org.jdesktop.layout.GroupLayout sherlokToWatsonLayout = new org.jdesktop.layout.GroupLayout(sherlokToWatson);
         sherlokToWatson.setLayout(sherlokToWatsonLayout);
         sherlokToWatsonLayout.setHorizontalGroup(
             sherlokToWatsonLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 0, Short.MAX_VALUE)
+            .add(0, 100, Short.MAX_VALUE)
         );
         sherlokToWatsonLayout.setVerticalGroup(
             sherlokToWatsonLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 236, Short.MAX_VALUE)
+            .add(0, 45, Short.MAX_VALUE)
         );
-
-        info.setText("Info: ");
 
         jMenu1.setText("File");
 
@@ -125,21 +141,27 @@ public class Teo2012 extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
-                .addContainerGap()
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                    .add(jLabel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(info)
-                    .add(sherlokToWatson, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(layout.createSequentialGroup()
+                        .add(239, 239, 239)
+                        .add(sherlokToWatson, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .add(jLabel1)))
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
-                .add(info)
-                .add(41, 41, 41)
+                .addContainerGap()
+                .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                 .add(sherlokToWatson, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .add(jLabel1)
+                .add(jLabel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 16, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -156,7 +178,7 @@ public class Teo2012 extends javax.swing.JFrame {
         
         try {
             //System.out.println(secuenciaPath);
-            this.s = new Secuencia(secuenciaPath);
+            this.s = new Secuencia(secuenciaPath.getAbsolutePath());
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Teo2012.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -172,50 +194,60 @@ public class Teo2012 extends javax.swing.JFrame {
         Vector<Node> a = h.code();
         int[] alphas = new int[s.getCantidadAlfas()];
         try {
-            alphas = this.s.codificar(secuenciaPath, h);    
+            alphas = this.s.codificar(secuenciaPath.getAbsolutePath(), h);    
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Teo2012.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        this.picturePath = getFile("Seleccionar Archivo SherlockToWatson.bmp");
-        sherlokToWatson.setLayout(new java.awt.BorderLayout());
-        Image li = new Image(picturePath, alphas, s.getCantidadAlfas());        
         
-        sherlokToWatson.add(li, BorderLayout.CENTER);
-        sherlokToWatson.validate();
+        this.picturePath = getFile("Seleccionar Archivo SherlockToWatson.bmp");
+        
+        info.setText("Info: La imagen "+ picturePath.getParent() +"/Sherlock2.png se ha creado.");        
+        
+        sherlokToWatson.setLayout(new java.awt.BorderLayout());
+        Image image = new Image(picturePath, alphas, s.getCantidadAlfas());        
+        
+        JFrame f = new JFrame();
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.add(new JScrollPane(image));
+        f.setSize(300,300);
+        f.setLocation(200,200);
+        f.setVisible(true);
+        //showIcon(image);
+        
+        // Agregar salida al galaga.exe.txt
     }//GEN-LAST:event_codificarActionPerformed
 
-    private String getFile(String title){
+    private File getFile(String title){
         fileChooser.setDialogTitle(title);
         int returnVal = fileChooser.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
+
             File file = fileChooser.getSelectedFile();
-            return file.getAbsolutePath();
+            //System.out.println(file.getCanonicalPath());
+            System.out.println(file.getParent());
+            return file;
+
         } else {
             info.setText("Info: File access cancelled by user.");
-            return "";
+            return null;
         }
     }
     
     private void decodificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decodificarActionPerformed
-        int returnVal = fileChooser.showOpenDialog(this);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File file = fileChooser.getSelectedFile();
-            this.picturePath = file.getAbsolutePath();
-            //try {
-                //System.out.println(picturePath);
-            sherlokToWatson.setLayout(new java.awt.BorderLayout());
-            //Image li = new Image(picturePath);
-            //alphas = new Vector();
-            //alphas = li.getAlphas();
-            //sherlokToWatson.add(li, BorderLayout.CENTER);
-            sherlokToWatson.validate();
-            //f.pack();
-            //f.setVisible(true);
-            //}
-        } else {
-            System.out.println("File access cancelled by user.");
+       this.galagaPath = getFile("Seleccionar Archivo a decodificar galaga.exe.txt");
+       Secuencia s = new Secuencia();
+        try {
+            s.fromGalaga(this.galagaPath.getAbsolutePath());
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Teo2012.class.getName()).log(Level.SEVERE, null, ex);
         }
+       System.out.println("File access cancelled by user."); 
+       
+       this.picturePath = getFile("Seleccionar Archivo Sherlock2.png");
+       
+       // Agarrar la imagen y sacarle los alphas y apartir de ahi 
+       // generar un archivito con el mensaje decodificado.
     }//GEN-LAST:event_decodificarActionPerformed
 /**
      * @param args the command line arguments
@@ -272,6 +304,7 @@ public class Teo2012 extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel sherlokToWatson;
     // End of variables declaration//GEN-END:variables
 
