@@ -4,10 +4,7 @@
  */
 package teo2012;
 
-import java.awt.BorderLayout;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -54,6 +51,7 @@ public class Teo2012 extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         info = new javax.swing.JLabel();
+        info1 = new javax.swing.JLabel();
         sherlokToWatson = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -75,21 +73,27 @@ public class Teo2012 extends javax.swing.JFrame {
 
         info.setText("Info:");
 
+        info1.setText("(C) para codificar, (D) para decodificar - Observar el titulo de cada Ventana!");
+
         org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .add(info, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 521, Short.MAX_VALUE)
+                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(info1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 521, Short.MAX_VALUE)
+                    .add(info, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 521, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
+                .add(info1)
+                .add(18, 18, 18)
                 .add(info)
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         org.jdesktop.layout.GroupLayout sherlokToWatsonLayout = new org.jdesktop.layout.GroupLayout(sherlokToWatson);
@@ -175,14 +179,11 @@ public class Teo2012 extends javax.swing.JFrame {
     private void codificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codificarActionPerformed
         simbolos = new Vector();
         this.secuenciaPath = getFile("Seleccionar Archivo secuenciaSherlock.data");
-        
         try {
-            //System.out.println(secuenciaPath);
-            this.s = new Secuencia(secuenciaPath.getAbsolutePath());
-        } catch (FileNotFoundException ex) {
+            this.s = new Secuencia(secuenciaPath);
+        } catch (IOException ex) {
             Logger.getLogger(Teo2012.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
         //this.simbolos = s.getSimbolos();
         for (int i = 0; i < s.getSimbolos().size(); i++){
             Node n = new Node(null, null, ((Simbolo) s.getSimbolos().get(i)).getSimbolo(),
@@ -205,7 +206,8 @@ public class Teo2012 extends javax.swing.JFrame {
         info.setText("Info: La imagen "+ picturePath.getParent() +"/Sherlock2.png se ha creado.");        
         
         sherlokToWatson.setLayout(new java.awt.BorderLayout());
-        Image image = new Image(picturePath, alphas, s.getCantidadAlfas());        
+        Image image = new Image(picturePath);
+        image.setAlphaComponents(alphas, s.getCantidadAlfas());
         
         JFrame f = new JFrame();
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -215,7 +217,6 @@ public class Teo2012 extends javax.swing.JFrame {
         f.setVisible(true);
         //showIcon(image);
         
-        // Agregar salida al galaga.exe.txt
     }//GEN-LAST:event_codificarActionPerformed
 
     private File getFile(String title){
@@ -235,19 +236,51 @@ public class Teo2012 extends javax.swing.JFrame {
     }
     
     private void decodificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decodificarActionPerformed
-       this.galagaPath = getFile("Seleccionar Archivo a decodificar galaga.exe.txt");
-       Secuencia s = new Secuencia();
+        FileOutputStream fout1 = null;
+        FileOutputStream fout2 = null;
         try {
-            s.fromGalaga(this.galagaPath.getAbsolutePath());
+            this.galagaPath = getFile("Seleccionar Archivo a decodificar galaga.exe.txt");
+            Secuencia secuencia = new Secuencia();
+            try {
+                secuencia.fromGalaga(this.galagaPath.getAbsolutePath());
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(Teo2012.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            System.out.println("File access cancelled by user.");
+            this.picturePath = getFile("Seleccionar Archivo Sherlock2.png");
+            Image image = new Image(picturePath);
+            Vector alphas;
+            alphas = image.getAlphaComponents(picturePath);
+            
+            for (int i = 0; i < secuencia.getSimbolos().size(); i++){
+                Node n = new Node(null, null, ((Simbolo) secuencia.getSimbolos().get(i)).getSimbolo(),
+                    ((Simbolo) secuencia.getSimbolos().get(i)).getProbabilidad());
+                this.simbolos.add(n);
+            }
+            
+            this.h = new Huffman(simbolos);
+            String code = this.h.decode(alphas);
+            
+            fout1 = new FileOutputStream (this.galagaPath.getParent() + "/alphas.txt");
+            for (int i = 0; i < alphas.size(); i++){
+                new PrintStream(fout1).println (alphas.get(i));
+            }
+            
+            fout2 = new FileOutputStream (this.galagaPath.getParent() + "/mensajeDecodificado.txt");
+            new PrintStream(fout2).println (code);
+            
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Teo2012.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                fout1.close();
+                fout2.close();
+            } catch (IOException ex) {
+                Logger.getLogger(Teo2012.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-       System.out.println("File access cancelled by user."); 
-       
-       this.picturePath = getFile("Seleccionar Archivo Sherlock2.png");
-       
-       // Agarrar la imagen y sacarle los alphas y apartir de ahi 
-       // generar un archivito con el mensaje decodificado.
+        this.info.setText("se creo un archivo "+this.galagaPath.getParent() + "/alphas.txt con los alphas de la imagen seleccionada"
+                + "se creo un archivo "+this.galagaPath.getParent() + "/mensajeDecodificado.txt con el mensaje enviado por Sherlock");
     }//GEN-LAST:event_decodificarActionPerformed
 /**
      * @param args the command line arguments
@@ -297,6 +330,7 @@ public class Teo2012 extends javax.swing.JFrame {
     private javax.swing.JMenuItem decodificar;
     private javax.swing.JFileChooser fileChooser;
     private javax.swing.JLabel info;
+    private javax.swing.JLabel info1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;

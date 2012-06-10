@@ -1,7 +1,6 @@
 package teo2012;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.Scanner;
 import java.util.Vector;
 
@@ -19,8 +18,8 @@ public class Secuencia {
     
     public Vector getSimbolos(){ return this.simbolos; }
     
-    public Secuencia(String path) throws FileNotFoundException{      
-        File file = new File(path);
+    public Secuencia(File path) throws IOException{      
+        File file = new File(path.getAbsolutePath());
         Scanner input = new Scanner(file);
         simbolos = new Vector();
         this.totalDeSimbolos = 0;
@@ -32,10 +31,12 @@ public class Secuencia {
         }
         //System.out.println(this.totalDeSimbolos);
         input.close();
+        FileOutputStream fout = new FileOutputStream (path.getParent() + "/galaga.exe.txt");
         for (int i = 0; i < this.simbolos.size(); i++){
             ((Simbolo) this.simbolos.get(i)).setProbabilidad(this.totalDeSimbolos);
-            //System.out.println(((Simbolo) this.simbolos.get(i)).getSimbolo()+":"+((Simbolo) this.simbolos.get(i)).getProbabilidad());
+            new PrintStream(fout).println (((Simbolo) this.simbolos.get(i)).getSimbolo()+":"+((Simbolo) this.simbolos.get(i)).getProbabilidad());
         }
+        fout.close();
     }
     
     public Secuencia(){

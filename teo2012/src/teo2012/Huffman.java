@@ -81,8 +81,6 @@ public class Huffman {
             }   
         }
         return cadena;
-        
-        
     }
     
     

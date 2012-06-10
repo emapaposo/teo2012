@@ -136,9 +136,12 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
+              <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="info" pref="521" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="info1" pref="521" max="32767" attributes="0"/>
+                      <Component id="info" alignment="0" pref="521" max="32767" attributes="0"/>
+                  </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -147,8 +150,10 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
+                  <Component id="info1" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="info" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="65" max="32767" attributes="0"/>
+                  <EmptySpace pref="31" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -157,6 +162,11 @@
         <Component class="javax.swing.JLabel" name="info">
           <Properties>
             <Property name="text" type="java.lang.String" value="Info:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="info1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="(C) para codificar, (D) para decodificar - Observar el titulo de cada Ventana!"/>
           </Properties>
         </Component>
       </SubComponents>
