@@ -4,3 +4,4 @@
 *.jar
 *.war
 *.ear
+/teo2012/build/
