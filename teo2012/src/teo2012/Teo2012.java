@@ -19,7 +19,7 @@ import javax.swing.JFileChooser;
 public class Teo2012 extends javax.swing.JFrame {
 
     private String secuenciaPath;
-    private Vector simbolos;
+    private Vector<Node> simbolos;
     
     /**
      * Creates new form Teo2012
@@ -40,6 +40,7 @@ public class Teo2012 extends javax.swing.JFrame {
 
         fileChooser = new javax.swing.JFileChooser();
         jLabel1 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -48,6 +49,13 @@ public class Teo2012 extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Teoria de la Informacion 2012 - Antognetti, Fernandez, Iglesias - Grupo 11 - Parte 1");
+
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("File");
 
@@ -77,13 +85,21 @@ public class Teo2012 extends javax.swing.JFrame {
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .addContainerGap()
-                .add(jLabel1)
-                .addContainerGap(52, Short.MAX_VALUE))
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(layout.createSequentialGroup()
+                        .add(jLabel1)
+                        .addContainerGap(52, Short.MAX_VALUE))
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
+                        .add(0, 0, Short.MAX_VALUE)
+                        .add(jButton1)
+                        .add(167, 167, 167))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
-                .addContainerGap(430, Short.MAX_VALUE)
+                .add(23, 23, 23)
+                .add(jButton1)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 378, Short.MAX_VALUE)
                 .add(jLabel1)
                 .addContainerGap())
         );
@@ -115,6 +131,12 @@ public class Teo2012 extends javax.swing.JFrame {
             System.out.println("File access cancelled by user.");
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Huffman  h=new Huffman(simbolos);
+        Vector<Node> a= h.getHuffmantree();
+        System.out.println(a.elementAt(0).getValue());
+    }//GEN-LAST:event_jButton1ActionPerformed
 /**
      * @param args the command line arguments
      */
@@ -149,15 +171,19 @@ public class Teo2012 extends javax.swing.JFrame {
         /*
          * Create and display the form
          */
+       
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
                 new Teo2012().setVisible(true);
             }
         });
+        
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFileChooser fileChooser;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
