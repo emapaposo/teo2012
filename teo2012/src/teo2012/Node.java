@@ -15,6 +15,10 @@ public class Node {
     private String symbol;
     private double value;
     
+    public Node (){
+
+    }
+    
     
     public Node (Node l, Node r, String s, double v){
         left=l;
