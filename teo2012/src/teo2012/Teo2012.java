@@ -113,6 +113,7 @@ public class Teo2012 extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         int returnVal = fileChooser.showOpenDialog(this);
+        simbolos=new Vector();
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
             secuenciaPath = file.getAbsolutePath();
@@ -133,6 +134,16 @@ public class Teo2012 extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+        Node n1=new Node(null, null, "B", 0.3);
+        Node n2=new Node(null, null, "A", 0.4);
+        Node n3=new Node(null, null, "D", 0.1);
+        Node n4=new Node(null, null, "C", 0.2);
+        simbolos=new Vector();
+        simbolos.add(n1);
+        simbolos.add(n2);
+        simbolos.add(n3);
+        simbolos.add(n4);
         Huffman  h=new Huffman(simbolos);
         Vector<Node> a= h.getHuffmantree();
         System.out.println(a.elementAt(0).getValue());

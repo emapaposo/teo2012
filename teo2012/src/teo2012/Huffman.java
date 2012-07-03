@@ -24,30 +24,45 @@ public class Huffman {
         // Ordenar la lista de porbabilidades
         if (arreglo.size()>1){
             sort();
-            Node ultimo= arreglo.lastElement();
-            arreglo.removeElementAt(arreglo.size());
-            Node anteUltimo= arreglo.lastElement();
-            arreglo.removeElementAt(arreglo.size());
-            Node nuevo=new Node(ultimo, anteUltimo, "NuevoNodo", ultimo.getValue() + anteUltimo.getValue());
+            Node izq= arreglo.lastElement();
+            arreglo.removeElementAt(arreglo.size()-1);
+            Node der= arreglo.lastElement();
+            arreglo.removeElementAt(arreglo.size()-1);
+            Node nuevo=new Node(izq, der, "NuevoNodo", (Math.round(izq.getValue() + der.getValue())));
             arreglo.add(nuevo);
             huffmanTree();
         }
+    }
+    
+    public void printTree(Node test, String a){
+        if (test.esHoja()) {
+            
+            System.out.println(a + ": " + test.getSymbol());
+        }
+        else{
+            printTree(test.getLeft(),a+="0");
+            a=a.substring(0, a.length()-1);
+            printTree(test.getRight(),a+="1");
+            a=a.substring(0, a.length()-1);
+        }
+            
     }
     
     public Vector<Node> getHuffmantree(){
         if (arreglo.size() >1){
             huffmanTree();
         }
+        printTree(arreglo.elementAt(0),"");
         return arreglo;
     }
     
     
     private void sort(){
         Node aux=new Node();
-        for (int i=0; i< arreglo.size();i++){
-             for (int j=0; j <arreglo.size()-1;j++){
-                if (arreglo.elementAt(i).getValue()> arreglo.elementAt(j).getValue()){
-                    copy(arreglo.elementAt(i), aux);
+        for (int i=0; i< arreglo.size()-1;i++){
+             for (int j=i; j <arreglo.size();j++){
+                if (arreglo.elementAt(i).getValue()< arreglo.elementAt(j).getValue()){
+                    copy(arreglo.elementAt(j), aux);
                     copy(arreglo.elementAt(i),arreglo.elementAt(j));
                     copy(aux,arreglo.elementAt(i));
                 }
@@ -59,7 +74,7 @@ public class Huffman {
           aux.setLeft(ori.getLeft());
           aux.setRight(ori.getRight());
           aux.setSymbol(ori.getSymbol());
-          aux.setLeft(ori.getLeft());
+          aux.setValue(ori.getValue());
                     
     }
  

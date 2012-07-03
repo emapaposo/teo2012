@@ -47,6 +47,10 @@ public class Node {
         return left;
     }
     
+    public boolean esHoja(){
+        return ((left==null) && (right==null));
+    }
+    
     public Node getRight(){
         return right;
     }
