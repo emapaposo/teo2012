@@ -33,7 +33,7 @@ public class Huffman {
     
     
     private void sort(){
-        
+        for (int =o)
     }
  
     /**
