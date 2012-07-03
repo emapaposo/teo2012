@@ -6,8 +6,7 @@ package teo2012;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -20,6 +19,7 @@ import javax.swing.JFileChooser;
 public class Teo2012 extends javax.swing.JFrame {
 
     private String secuenciaPath;
+    private Vector simbolos;
     
     /**
      * Creates new form Teo2012
@@ -102,6 +102,12 @@ public class Teo2012 extends javax.swing.JFrame {
             secuenciaPath = file.getAbsolutePath();
             try {
                 Secuencia s = new Secuencia(secuenciaPath);
+                //this.simbolos = s.getSimbolos();
+                for (int i = 0; i < s.getSimbolos().size(); i++){
+                    Node n = new Node(null, null, ((Simbolo) s.getSimbolos().get(i)).getSimbolo(),
+                            ((Simbolo) s.getSimbolos().get(i)).getProbabilidad());
+                    this.simbolos.add(n);
+                }
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(Teo2012.class.getName()).log(Level.SEVERE, null, ex);
             }
