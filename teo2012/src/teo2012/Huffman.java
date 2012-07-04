@@ -23,7 +23,6 @@ public class Huffman {
     }
             
     public void huffmanTree(){
-        // Ordenar la lista de porbabilidades
         if (arreglo.size()>1){
             sort();
             Node izq= arreglo.lastElement();
@@ -36,16 +35,14 @@ public class Huffman {
         }
     }
     
-    public void printTree(Node test, String a){
-        if (test.esHoja()) {
-            
-            //System.out.println(a + ": " + test.getSymbol());
+    public void createCode(Node test, String a){
+        if (test.esHoja()) {   
             codigo.put(test.getSymbol(), a);
         }
         else{
-            printTree(test.getLeft(),a+="0");
+            createCode(test.getLeft(),a+="0");
             a=a.substring(0, a.length()-1);
-            printTree(test.getRight(),a+="1");
+            createCode(test.getRight(),a+="1");
             a=a.substring(0, a.length()-1);
         }
             
@@ -57,12 +54,35 @@ public class Huffman {
     }
     
     
-    public Vector<Node> getHuffmantree(){
+    public Vector<Node> code(){
         if (arreglo.size() >1){
             huffmanTree();
         }
-        printTree(arreglo.elementAt(0),"");
+        createCode(arreglo.elementAt(0),"");
         return arreglo;
+    }
+    
+    public String decode(Vector codigo){
+        int mask=1 << 7;
+        String cadena ="";
+        Node aux= this.arreglo.firstElement();
+        for (int i=0; i<codigo.size();i++){ 
+            int value= ((Integer) codigo.elementAt(i)).intValue();
+            for (int j=0;j<8;j++){
+                if ((value & mask)==128)
+                    aux=aux.getRight();
+                else 
+                    aux=aux.getLeft();
+                if(aux.esHoja()){
+                    cadena+=aux.getSymbol();
+                    aux=this.arreglo.firstElement();
+                }
+                value = value<<1;
+            }   
+        }
+        return cadena;
+        
+        
     }
     
     
@@ -85,13 +105,6 @@ public class Huffman {
           aux.setSymbol(ori.getSymbol());
           aux.setValue(ori.getValue());
                     
-    }
- 
-    /**
-    * 
-    */
-    public void unDoIt(){
-    
     }
 
 }
