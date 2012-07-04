@@ -135,15 +135,21 @@ public class Teo2012 extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
-        Node n1=new Node(null, null, "B", 0.3);
-        Node n2=new Node(null, null, "A", 0.4);
-        Node n3=new Node(null, null, "D", 0.1);
-        Node n4=new Node(null, null, "C", 0.2);
+        Node n1=new Node(null, null, "A", 0.3025);
+        Node n2=new Node(null, null, "E", 0.2281);
+        Node n3=new Node(null, null, "C", 0.1601);
+        Node n4=new Node(null, null, "F", 0.1008);
+        Node n5=new Node(null, null, "D", 0.0971);
+        Node n6=new Node(null, null, "B", 0.0588);
+        Node n7=new Node(null, null, "G", 0.0526);
         simbolos=new Vector();
         simbolos.add(n1);
         simbolos.add(n2);
         simbolos.add(n3);
         simbolos.add(n4);
+        simbolos.add(n5);
+        simbolos.add(n6);
+        simbolos.add(n7);
         Huffman  h=new Huffman(simbolos);
         Vector<Node> a= h.getHuffmantree();
         System.out.println(a.elementAt(0).getValue());

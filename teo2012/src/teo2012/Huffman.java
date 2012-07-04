@@ -28,7 +28,7 @@ public class Huffman {
             arreglo.removeElementAt(arreglo.size()-1);
             Node der= arreglo.lastElement();
             arreglo.removeElementAt(arreglo.size()-1);
-            Node nuevo=new Node(izq, der, "NuevoNodo", (Math.round(izq.getValue() + der.getValue())));
+            Node nuevo=new Node(izq, der, "NuevoNodo", (izq.getValue() + der.getValue()));
             arreglo.add(nuevo);
             huffmanTree();
         }
