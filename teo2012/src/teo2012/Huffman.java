@@ -5,6 +5,7 @@
 package teo2012;
 import java.util.Vector;
 import teo2012.Node;
+import java.util.HashMap;
 /**
  *
  * @author emn
@@ -15,6 +16,7 @@ public class Huffman {
     * 
     */
     private Vector<Node> arreglo=new Vector();
+    private HashMap codigo=new HashMap();
     
     public Huffman(Vector<Node> v1){
         arreglo=v1;
@@ -37,7 +39,8 @@ public class Huffman {
     public void printTree(Node test, String a){
         if (test.esHoja()) {
             
-            System.out.println(a + ": " + test.getSymbol());
+            //System.out.println(a + ": " + test.getSymbol());
+            codigo.put(test.getSymbol(), a);
         }
         else{
             printTree(test.getLeft(),a+="0");
@@ -47,6 +50,12 @@ public class Huffman {
         }
             
     }
+    
+    
+    public String getCode(String code){
+        return (String)codigo.get(code);
+    }
+    
     
     public Vector<Node> getHuffmantree(){
         if (arreglo.size() >1){
